@@ -1,39 +1,32 @@
 import Contact from "../db/models/Contact.js";
 
-export const listContacts = () => {
-  return Contact.findAll();
-};
+export function listContacts(query) {
+  return Contact.findAll({ where: query });
+}
 
-export const getContactById = (contactId) => {
-  return Contact.findByPk(contactId);
-};
+export function getContact(query) {
+  return Contact.findOne({ where: query });
+}
 
-export const addContact = (data) => {
+export async function removeContact(query) {
+  return Contact.destroy({ where: query });
+}
+
+export function addContact(data) {
   return Contact.create(data);
-};
+}
 
-export const removeContact = async (contactId) => {
-  const contact = await getContactById(contactId);
-  if (!contact) {
-    return null;
-  }
-  await contact.destroy();
-  return contact;
-};
-
-export const updateContact = async (contactId, data) => {
-  const contact = await getContactById(contactId);
-  if (!contact) {
-    return null;
-  }
+export async function updateContact(query, data) {
+  const contact = await getContact(query);
+  if (!contact) return null;
   return contact.update(data, { returning: true });
-};
+}
 
-export const updateStatusContact = async (contactId, body) => {
+export async function updateStatusContact(query, body) {
   const { favorite } = body;
-  const contact = await Contact.findByPk(contactId);
+  const contact = await getContact(query);
   if (!contact) {
     return null;
   }
   return await contact.update({ favorite }, { returning: true });
-};
+}
