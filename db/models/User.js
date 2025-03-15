@@ -12,7 +12,18 @@ const User = sequelize.define(
       defaultValue: "starter",
     },
     token: { type: DataTypes.STRING, defaultValue: null },
-    avatarURL: DataTypes.STRING
+    avatarURL: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    verificationToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   { tableName: "users", createdAt: false, updatedAt: false }
 );

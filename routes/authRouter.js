@@ -5,11 +5,13 @@ import {
   getCurrent,
   logoutUser,
   uploadAvatar,
+  verify,
+  resendVerify,
 } from "../controllers/authController.js";
 import { upload } from "../middlewares/upload.js";
 
 import validateBody from "../helpers/validateBody.js";
-import { loginSchema, registerSchema } from "../schemas/authSchema.js";
+import { loginSchema, registerSchema, verifySchema } from "../schemas/authSchema.js";
 import controllerWrapper from "../decorators/controllerWrapper.js";
 import authenticate from "../middlewares/authenticate.js";
 
@@ -37,5 +39,9 @@ authRouter.patch(
   upload.single("avatar"),
   controllerWrapper(uploadAvatar)
 );
+
+authRouter.get('/verify/:verificationToken', controllerWrapper(verify));
+
+authRouter.post('/verify', validateBody(verifySchema), controllerWrapper(resendVerify));
 
 export default authRouter;
