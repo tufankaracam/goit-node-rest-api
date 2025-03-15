@@ -17,7 +17,7 @@ const transport = nodemailer.createTransport(nodemailerConfig);
 
 function sendEmail(data) {
   const email = {
-    from: `John Doe ${UKR_NET_MAIL}`,
+    from: `HW06-EMAIL ACCOUNT VERIFICATION SERVICE ${UKR_NET_MAIL}`,
     ...data,
   };
 

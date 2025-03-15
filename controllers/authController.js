@@ -4,6 +4,7 @@ import HttpError from "../helpers/HttpError.js";
 import { createToken } from "../helpers/jwt.js";
 import path from "path";
 import fs from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 
 const avatarPath = path.join("public", "avatars");
 
@@ -105,7 +106,7 @@ export async function resendVerify(req, res) {
     throw HttpError(400, "Verification has already been passed");
   }
 
-  const verificationToken = nanoid();
+  const verificationToken = uuidv4();
 
   await user.update({ verificationToken });
   await authServices.resendVerify(email, verificationToken);
