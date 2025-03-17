@@ -2,7 +2,7 @@ import User from "../db/models/User.js";
 import gravatar from "gravatar";
 import sendEmail from "../helpers/sendEmail.js";
 import { v4 as uuidv4 } from "uuid";
-
+import 'dotenv/config';
 const { BASE_URL } = process.env;
 
 export async function findUser(query) {

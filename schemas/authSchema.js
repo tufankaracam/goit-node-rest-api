@@ -11,5 +11,5 @@ export const loginSchema = Joi.object({
 });
 
 export const verifySchema = Joi.object({
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
 });

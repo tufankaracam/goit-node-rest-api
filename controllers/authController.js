@@ -81,13 +81,13 @@ export async function uploadAvatar(req, res) {
 
 export async function verify(req, res) {
   const { verificationToken } = req.params;
-  const user = await findUser({ verificationToken });
+  const user = await authServices.findUser({ verificationToken });
 
   if (!user) {
     throw HttpError(404, "User not found");
   }
 
-  await user.update({ verificationToken: null, verified: true });
+  await user.update({ verificationToken: null, verify: true });
 
   res.status(200).json({
     message: "Verification successful",
@@ -96,13 +96,13 @@ export async function verify(req, res) {
 
 export async function resendVerify(req, res) {
   const { email } = req.body;
-  const user = await findUser({ email });
+  const user = await authServices.findUser({ email });
 
   if (!user) {
     throw HttpError(404, "User not found");
   }
 
-  if (user.verified) {
+  if (user.verify) {
     throw HttpError(400, "Verification has already been passed");
   }
 
